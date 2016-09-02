@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pixel by Pixel</title>
+    <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        pixelLength = 13780
+        for (var i = 0; i<pixelLength; i++) {
+            if( i % 130 == 0) {
+                $('body').append('<div style="clear:both;"></div>');
+            }
+            $('body').append('<div id=' + i + ' style="width:5px;background:gray;height:5px;float:left;"></div>');
+        }
+        for (let i = 0, n = pixelLength; i < n; i++) {
+          $.get('http://localhost:5000/pixel', {"index": i}, function(data) {
+                var r = data["r"]
+                var g = data["g"]
+                var b = data["b"]
+                $('#' + i).css('background', 'rgb('+r+','+g+','+b+')');
+                console.log(data)
+            })
+        }
+    });
+    </script>
+  </head>
+  <body>
+    <p><canvas style="display:none;" id="myCanvas" width="350" height="250"></canvas></p>
+  </body>
+</html>
